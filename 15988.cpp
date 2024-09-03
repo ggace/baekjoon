@@ -11,7 +11,7 @@ const ll MIN = ~MAX;
 
 using namespace std;
 
-int dp[1000001] = {0};
+ll dp[1000001] = {0};
 
 int main(){
     fio;
