@@ -93,7 +93,7 @@ int main() {
 
         // 부모 올라가기
         for(int j = back_cycle_index; j < n; j++) {
-            if(visited[back_cycle[j]]) {
+            if(visited[back_cycle[back_cycle_index]] && node->value == back_cycle[back_cycle_index]) {
                 
                 ++back_cycle_index;
                 if(node->left_leaf != NULL && node->right_leaf == NULL) {
@@ -101,6 +101,10 @@ int main() {
                 }
                 
                 node = node->parent;
+            }
+            else if(visited[back_cycle[back_cycle_index]]) {
+                cout << "0\n";
+                return 0;
             }
             else {
                 break;

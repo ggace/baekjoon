@@ -18,6 +18,9 @@ bool reverse_compare(int i1, int i2) {
 }
 
 bool compare(pair<int, int> a, pair<int, int> b) {
+    if(a.second == b.second) {
+        return a.first < b.first;
+    }
     return a.second > b.second;
 }
 
