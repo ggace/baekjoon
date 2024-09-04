@@ -7,31 +7,20 @@ typedef long long ll;
 #include <algorithm>
 #include <queue>
 
+
 using namespace std;
 
-vector<pair<int, int>> v;
+bool reverse_compare(int i1, int i2) {
+    return i1 > i2;
+}
+
+vector<vector<int>> v(10001);
+vector<int> result;
+int max_count = -1;
+bool visited[10000+1];
 
 void bfs(int n) {
-    queue<int> q;
-    int visited[10000+1] = {0, };
-
-    q.push(n);
-
-    int count = 0;
-
-    while(!q.empty()) {
-        int tmp = q.front();    
-        q.pop();
-        
-        count++;
-        for(int i = 0; i < v[tmp].size(); i++) {
-            int next = v[tmp][i];
-            if(visited[next]){
-                continue;
-            }
-            q.push(next);
-        }
-    }
+    
 }
 
 int main(){
@@ -46,8 +35,10 @@ int main(){
 
         cin >> a >> b;
 
-        v.push_back({b, a});
+        v[b].push_back(a);
     }
+
+    
 
     return 0;
 }
