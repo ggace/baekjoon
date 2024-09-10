@@ -1,76 +1,52 @@
-
+#define fio cin.tie(0);cout.tie(0);ios_base::sync_with_stdio(false);
+typedef long double ld;
 typedef long long ll;
+typedef unsigned long long ull;
 
-#include <utility>
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define loop(a, b) for(int i = a; i < b; i++) 
+#define foreach(l) for(auto ele : l)
+#define println(s) cout << s << "\n"
+#define mp() make_pair()
 
-const ll MAX = 0x7fffffffffffffff;
-const ll MIN = ~MAX;
+#include <bits/stdc++.h>
 
 using namespace std;
 
-#define fio cin.tie(0);cout.tie(0);ios_base::sync_with_stdio(false);
+struct Thing {
+    int mess;
+    int value;
+    Thing(int m, int v) : mess(m), value(v) {}
+    
+};
 
-bool reverse_compare(int i1, int i2) {
-    return i1 > i2;
+priority_queue<Thing> things;
+vector<int> weights;
+
+bool reverse_compare(int a, int b) {
+    return a > b;
 }
 
-bool compare(pair<int, int> a, pair<int, int> b) {
-    if(a.second == b.second) {
-        return a.first < b.first;
-    }
-    return a.second > b.second;
-}
+ll result = 0;
 
-vector<pair<int, int>> jewerly;
-vector<int> bag;
-
-int main(){
-    fio;
+int main(int argc, char* argv[]) {
+    //fio;
 
     int n, k;
+
     cin >> n >> k;
 
     for(int i = 0; i < n; i++) {
         int m, v;
-
         cin >> m >> v;
-
-        jewerly.push_back({m, v});
+        things.push(Thing(m, v));
     }
-
-    sort(jewerly.begin(), jewerly.end(), compare);
-
-    int result = 0;
-
     for(int i = 0; i < k; i++) {
-        int c;
-
-        cin >> c;
-
-        bag.push_back(c);
+        int w;
+        cin >> w;
+        weights.push_back(w);
     }
-
-
-    int index = 0;
-    sort(bag.begin(), bag.end(), reverse_compare);
-    for(int i = 0; i < bag.size(); i++){
-        for(int j= index; j < jewerly.size();j++) {
-            //cout << jewerly[j].first << "\n";
-            if(jewerly[j].first <= bag[j]) {
-                //cout << "end\n";
-                result += jewerly[j].second;
-                index = j;
-                jewerly.erase(jewerly.begin() + j);
-                break;;
-            }
-        }
-    }
-    
-
-    cout << result << "\n";
 
     return 0;
 }
