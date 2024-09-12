@@ -19,10 +19,16 @@ struct Thing {
     int value;
     Thing(int m, int v) : mess(m), value(v) {}
     
+    bool operator<(const Thing & a)const {
+        if(value == a.value) {
+            return mess > a.mess;
+        }
+		return value < a.value;
+	}
 };
 
 priority_queue<Thing> things;
-vector<int> weights;
+multiset<int> weights;
 
 bool reverse_compare(int a, int b) {
     return a > b;
@@ -45,8 +51,29 @@ int main(int argc, char* argv[]) {
     for(int i = 0; i < k; i++) {
         int w;
         cin >> w;
-        weights.push_back(w);
+        weights.insert(w);
     }
+
+    while(!things.empty() && ! weights.empty()) {
+        auto [mess, value] = things.top();
+        //cout << "{" << mess << ", " << value <<"}\n";
+        things.pop();
+
+        auto iter = weights.lower_bound(mess);
+        if(iter  == weights.end()) {
+            continue;
+        }
+
+        result += value;
+
+        //cout << *iter << "\n";
+
+
+
+        weights.erase(iter);
+    }
+
+    cout << result << "\n";
 
     return 0;
 }

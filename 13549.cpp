@@ -15,20 +15,28 @@ int n, K;
 
 queue<pair<int, int>> q;
 int visited[101010 * 8] = {0, };
+int result = -1;
+int result_count = 0;
 
 void bfs() { 
     
     while(!q.empty()) {
         auto [num, cnt] = q.front();
 
-        //cout << "{" << num << ", " << cnt << "}\n";
+        
+        cout << "{" << num << ", " << cnt << "}\n";
 
         q.pop();
 
         if(num == K) {
-            cout << cnt << "\n";
+            
+            result = cnt;
+            ++result_count;
+        }
+        if(result != -1 && result < cnt) {
             break;
         }
+
 
         if(visited[num]) {
             continue;
@@ -37,7 +45,7 @@ void bfs() {
         visited[num] = 1; 
 
         if(num*2 <= 100000)
-            q.push({num*2, cnt});
+            q.push({num*2, cnt+1});
         if(num-1 >= 0)
             q.push({num-1, cnt+1});
         if(num+1 <= 100000)
@@ -53,6 +61,9 @@ int main(){
     q.push({n, 0});
 
     bfs();
+
+    cout << result << "\n";
+    cout << result_count << "\n";
 
     return 0;
 }
