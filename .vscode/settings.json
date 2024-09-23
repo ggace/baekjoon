@@ -22,7 +22,8 @@
         "span": "cpp",
         "regex": "cpp",
         "valarray": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "random": "cpp"
     },
     "BOJ.extension": "cpp",
     "BOJ.author": "skydream10"

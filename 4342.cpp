@@ -5,16 +5,14 @@ typedef unsigned long long ull;
 
 #define pii pair<int, int>
 #define pll pair<ll, ll>
-#define loop(a, b, i) for(i = a; i < b; i++) 
-#define foreach(l, ele) for(ele : l)
+#define loop(a, b) for(int i = a; i < b; i++) 
+#define foreach(l) for(auto ele : l)
 #define println(s) cout << s << "\n"
 #define mp() make_pair()
 
 #include <bits/stdc++.h>
 
 using namespace std;
-
-ll g, l;
 
 ll fastpow(ll a, ll n, ll c){
     ll result=1;
@@ -30,37 +28,31 @@ ll fastpow(ll a, ll n, ll c){
     return result;
 }
 
-ll gcd(int a, int b) {
-    if(!b) return a;
-    return gcd(b, a%b);
-}
-
-void solution(ll r) {
-    for(ll i = sqrt(r); i >= 1; i--) {
-        if(!(r%i)) {
-            
-            if(gcd(i, r/i) == 1) {
-                cout << i *g << " " << r/i*g << "\n";
-                break;
-            }
-        }
+ll my_gcd(ll a, ll b, ll cnt) {
+    cout << a << ", " << b << " : " << cnt << "\n";
+    if(b == 0) {
+        return cnt;
     }
+    return my_gcd(b, a%b, cnt+1);
 }
 
 int main(int argc, char* argv[]) {
-    fio;
-
-    cin >> g >> l;
-
-    ll r = l/g;
-
-    solution(r);
-
     
 
-
-
-
+    while(true) {
+        int a, b;
+        cin >> a >> b;
+        if(!(a | b)) {
+            break;
+        }
+        ll result = my_gcd(max(a, b), min(a, b), 0);
+        if(result & 1) {
+            cout << "A wins\n";
+        }
+        else {
+            cout << "B wins\n";
+        }
+    }
 
     return 0;
 }

@@ -28,10 +28,36 @@ ll fastpow(ll a, ll n, ll c){
     return result;
 }
 
+bool is_prime(ll p) {
+    for(ll i = 2; i * i <= p; i++) {
+        if(p % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main(int argc, char* argv[]) {
     fio;
 
+    while(true) {
+        ll p, a;
 
+        cin >> p >> a;
+
+        if(p == 0 && a == 0) {
+            break;
+        }
+
+        ll result = fastpow(a, p-1, p);
+
+        if(result == a && !is_prime(p)) {
+            cout << "yes\n";
+        }
+        else {
+            cout << "no\n";
+        }
+    }
 
     return 0;
 }

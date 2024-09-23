@@ -5,6 +5,7 @@ typedef unsigned long long ull;
 typedef char bool;
 
 #include <stdio.h>
+#include <stdlib.h>
 
 int main() {
 
@@ -14,9 +15,11 @@ int main() {
     scanf("%s", s);
     scanf("%d", n);
 
+    printf("%s %d", s, n);
+
     
 
-
+    system("pause");
     
     return 0;
 }

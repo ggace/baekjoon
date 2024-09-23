@@ -28,10 +28,37 @@ ll fastpow(ll a, ll n, ll c){
     return result;
 }
 
+map<int, int> visited;
+
 int main(int argc, char* argv[]) {
     fio;
 
+    int n;
 
+    cin >> n;
+
+    for(int i = 0; i < n; i++) {
+        int a;
+
+        cin >> a;
+
+        visited[a] += 1;
+        
+    }
+
+    int m;
+
+    cin >> m;
+
+    int i;
+    loop(0, m, i) {
+        
+        int a;
+        cin >> a;
+
+        cout << visited[a] << " ";
+        
+    }
 
     return 0;
 }

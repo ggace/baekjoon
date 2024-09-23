@@ -10,7 +10,7 @@ bool reverse_compare(int i1, int i2) {
     return i1 > i2;
 }
 
-map<pair<ll, ll>, ll> m;
+map<pair<ll, ll>, ll> visited;
 
 ll result = 0;
 
@@ -49,9 +49,9 @@ int main(int argc, char* argv[]) {
         
         
         
-        auto ele = m.find(p);
-        if(ele == m.end()) {
-            m.insert({p, 1});
+        auto ele = visited.find(p);
+        if(ele == visited.end()) {
+            visited.insert({p, 1});
         }
         else {
             (ele->second)++;
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
 
     }
 
-    for(auto i = m.begin(); i != m.end(); i++) {
+    for(auto i = visited.begin(); i != visited.end(); i++) {
         auto [x1, y1] = i->first;
         ll count1 = i->second;
         //cout << x1 << ", " << y1 << " >> ";
@@ -82,10 +82,10 @@ int main(int argc, char* argv[]) {
 
         
         
-        auto ele = m.find({y1, x1});
+        auto ele = visited.find({y1, x1});
 
         
-        if(ele != m.end()) {
+        if(ele != visited.end()) {
             //cout << ele->second << " * " << count1 << "\n";
             result += ele->second * count1;
         }

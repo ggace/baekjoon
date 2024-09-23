@@ -5,8 +5,8 @@ typedef unsigned long long ull;
 
 #define pii pair<int, int>
 #define pll pair<ll, ll>
-#define loop(a, b, i) for(i = a; i < b; i++) 
-#define foreach(l, ele) for(ele : l)
+#define loop(a, b) for(int i = a; i < b; i++) 
+#define foreach(l) for(auto ele : l)
 #define println(s) cout << s << "\n"
 #define mp() make_pair()
 
@@ -28,8 +28,35 @@ ll fastpow(ll a, ll n, ll c){
     return result;
 }
 
+bool visited[9 * 1010101];
+
 int main(int argc, char* argv[]) {
     fio;
+
+    ll n;
+
+    cin >> n;
+
+    n *= 9;
+
+    int temp = 10 % n;
+    ll result = 1;
+    visited[temp] = true;
+
+    while(true) {
+        if(temp == 1) {
+            cout << result << "\n";
+            break;
+        }
+        
+        temp = ((10 % n) * (temp % n)) % n;
+        if(visited[temp]) {
+            cout << "-1\n";
+            break;
+        }
+        visited[temp] = true;
+        result++;
+    }
 
 
 

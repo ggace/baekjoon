@@ -28,8 +28,31 @@ ll fastpow(ll a, ll n, ll c){
     return result;
 }
 
+bool prime_check[1010101] = {1,1,0};
+vector<ll> prime;
+
+void siv(int n) {
+    for(int i = 2; i <= n; i++) {
+        if(!prime_check[i]) prime.push_back(i);
+        
+        for(auto p : prime) {
+            if(p > i) break;
+            if(p * i > n) break;
+            prime_check[i * p] = 1;   
+        }
+    }
+}
+
 int main(int argc, char* argv[]) {
     fio;
+
+    int n;
+
+    cin >> n;
+
+    siv(100'000'000);
+
+    lower_bound(prime.begin(), prime.end(), n);
 
 
 

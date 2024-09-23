@@ -5,8 +5,8 @@ typedef unsigned long long ull;
 
 #define pii pair<int, int>
 #define pll pair<ll, ll>
-#define loop(a, b, i) for(i = a; i < b; i++) 
-#define foreach(l, ele) for(ele : l)
+#define loop(a, b) for(int i = a; i < b; i++) 
+#define foreach(l) for(auto ele : l)
 #define println(s) cout << s << "\n"
 #define mp() make_pair()
 
@@ -28,8 +28,18 @@ ll fastpow(ll a, ll n, ll c){
     return result;
 }
 
+int factorize(int n) {
+    
+}
+
 int main(int argc, char* argv[]) {
     fio;
+
+    ll min_number, max_number;
+
+    cin >> min_number >> max_number;
+
+
 
 
 

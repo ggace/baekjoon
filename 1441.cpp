@@ -28,8 +28,24 @@ ll fastpow(ll a, ll n, ll c){
     return result;
 }
 
+vector<int> A;
+
 int main(int argc, char* argv[]) {
     fio;
+
+    int n, l, r;
+
+    cin >> n >> l >> r;
+
+    for(int i = 0; i < n; i++) {
+        int a;
+        cin >> a;
+        if(a == 1) {
+            cout << r - l + 1 << "\n";
+            return 0;
+        }
+        A.push_back(a);
+    }
 
 
 

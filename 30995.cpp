@@ -12,6 +12,8 @@ typedef unsigned long long ull;
 
 #include <bits/stdc++.h>
 
+#define REST 998'244'353
+
 using namespace std;
 
 ll fastpow(ll a, ll n, ll c){
@@ -31,7 +33,25 @@ ll fastpow(ll a, ll n, ll c){
 int main(int argc, char* argv[]) {
     fio;
 
+    ll N, M;
 
+    cin >> N >> M;
+
+    int n = N-M;
+
+    ll t = fastpow(25, n, REST);
+    
+
+    ll result = (((t * t) % REST) * fastpow(n+1, 2, REST)) % REST;
+
+    cout << result << "\n";
+
+    for(ll i = 1; i <= n; i++) {
+        ll temp = fastpow(25, n-i, REST);
+        result = (result + ((((t % REST)*(temp%REST)) % REST) * ((((n-i+1) % REST * (n+1) % REST) % REST) * 2) % REST) % REST ) % REST;
+    }
+
+    cout <<result << "\n";
 
     return 0;
 }

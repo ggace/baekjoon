@@ -43,7 +43,7 @@ int main(){
         for(int j = a; j <= b; j++) {
             cout << j << " ";
             if(j < k) {
-                for(int t = )
+                
             }
             dp[i][j] = dp[i-1][j-3] + dp[i-1][j-3] + dp[i-1][j-1] + dp[i-1][j] + dp[i-1][j+1] + dp[i-1][j+2] + dp[i-1][j+3];
         }
