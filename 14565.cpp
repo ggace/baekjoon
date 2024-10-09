@@ -28,24 +28,64 @@ ll fastpow(ll a, ll n, ll c){
     return result;
 }
 
-char visited[1'000'000'000'000 / 8];
+vector<pll> sn;
+vector<ll> an;
+ll n, a;
+
+vector<pair<__int128_t, __int128_t>> result;
+
+ll my_gcd(ll a, ll b) {
+    if(b == 0) {
+        return a;
+    }
+
+    //cout << a << " " << b << "\n";
+    sn.push_back({b, a%b});
+    an.push_back(a / b);
+
+    return my_gcd(b, a%b);
+}
+
+
 
 int main(int argc, char* argv[]) {
     fio;
-
-    ll n, a;
 
     cin >> n >> a;
 
     cout << n-a << " ";
 
-    for(ll c = 0; c < n; c++) {
-        if ((a * (c%n)) % n == 1) {
-            cout << c << "\n";
-            break;
-        }
-        
+    if(a == 1) {
+        cout << "1\n";
+        return 0;
     }
 
+    sn.push_back({n, a});
+
+    ll t = my_gcd(n, a);
+
+    if(t != 1) {
+        cout << "-1\n";
+        return 0;
+    }
+    sn.pop_back();
+    sn.pop_back();
+    an.pop_back();
+
+    ll j = 0;
+    
+    result.push_back({1, -an[an.size()-1]});
+    for(ll i = an.size()-2; i >= 0 ; i--) {
+        pair<__int128_t, __int128_t> before = result[j++];
+        result.push_back({before.second % n, ((before.first % n) - ((before.second % n) * ((__int128_t)an[i] % n)) % n ) %n});
+    }
+
+    ll final_result = result.back().second % n;
+
+    if(final_result < 0) {
+        final_result += n;
+    }
+    
+    cout << final_result << "\n";
     return 0;
 }

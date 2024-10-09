@@ -1,15 +1,19 @@
 #include <stdio.h>
 
+typedef struct _pair {
+    int first;
+    int second;
+} pair;
+
 int main() {
-    int i = 2;
+    long long a = 0x0000000200000001;
+    printf("%lld\n", a);
+    printf("%d\n", (int)a);
+    printf("%d\n", (int)(a >> 32));
 
-    int a = i << 3;
-    int b = i * 8;
+    pair p = {2,1};
 
-    int c = 1 << 3;
-    int d = 1 * 8;
-
-    int result = a +b+c+d;
-
-    printf("%d\n", result);
+    printf("%d\n", p.first);
+    printf("%d\n", p.second);
+    return 0;
 }
