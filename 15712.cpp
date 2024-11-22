@@ -29,7 +29,7 @@ ll fastpow(ll a, ll n, ll c){
 }
 
 vector<vector<vector<ll>>> v;
-vector<vector<ll>> result;
+vector<vector<ll>> djik_result;
 int rest;
 
 vector<vector<ll>> multiply_matix(vector<vector<ll>> a, vector<vector<ll>> b) {
@@ -58,8 +58,8 @@ int main(int argc, char* argv[]) {
         {1,1},
         {0,r}
     });
-    result.push_back({a, 0});
-    result.push_back({(a*r)%m, 0});
+    djik_result.push_back({a, 0});
+    djik_result.push_back({(a*r)%m, 0});
 
     n--;
     ll t = 1;
@@ -69,12 +69,12 @@ int main(int argc, char* argv[]) {
     }
     for(int i = 0; i < 64; i++) {
         if((n >> i) & 0b1) {
-            result = multiply_matix(v[i], result);
+            djik_result = multiply_matix(v[i], djik_result);
             
         }
     }
 
-    cout << result[0][0] << "\n";
+    cout << djik_result[0][0] << "\n";
 
 
     

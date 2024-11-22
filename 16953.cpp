@@ -7,11 +7,6 @@ typedef unsigned long long ull;
 #define loop(a, b, type, i) for(type i = a; i < b; i++) 
 #define println(s) cout << s << "\n"
 #define mp() make_pair()
-#define PRIME_SIZE 5
-#define PIE M_PIf64
-#define arri(n) array<int, n>
-#define arrl(n) array<ll, n>
-#define input(type, value) type value; cin >> value;
 
 #ifdef BOJ
 #define debug(x)  ((void)0);
@@ -26,18 +21,6 @@ typedef unsigned long long ull;
 #include <bits/stdc++.h>
 
 using namespace std;
-
-class Direction {
-    public:
-        int dx;
-        int dy;
-};
-
-class Position {
-    public:
-        int x;
-        int y;
-};
 
 ll fastpow(ll a, ll n, ll c){
     ll result=1;
@@ -54,7 +37,7 @@ ll fastpow(ll a, ll n, ll c){
 }
 
 vector<ll> prime_list;
-bool is_prime[PRIME_SIZE+1] = {1,1,0}; // 0이 소수
+bool is_prime[500+1] = {1,1,0}; // 0이 소수
 void siv(ll n) {
     for(int i = 2; i <= n; i++) {
         if(!is_prime[i]) prime_list.push_back(i);
@@ -66,19 +49,39 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+void bfs(int a, int b) {
+    
+    queue<pll> q;
+    q.push({a, 1});
+
+    while(!q.empty()) {
+        auto [cur, cnt] = q.front();
+        q.pop();
+        if(cur == b) {
+
+            cout << cnt << "\n";
+            return;
+        }
+        if(cur * 2 <= 1e9 && cur*2 <= b)
+            q.push({cur * 2, cnt+1});
+        if(cur *10 + 1 <= 1e9 && cur * 10 + 1 <= b) {
+            q.push({cur * 10 + 1, cnt + 1});
+        }
+    }
+
+    cout << "-1\n";
+}
 
 int main(int argc, char* argv[]) {
-    fio; 
+    fio;
 
-    int n;
-    cin >> n;
+    int a, b;
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
-    }
+    cin >> a >> b;
+
+    bfs(a, b);
+
+    
 
     return 0;
 }

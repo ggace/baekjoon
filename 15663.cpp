@@ -66,19 +66,47 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+vector<int> v;
+int n;
+int m;
+map<vector<int>, bool> used;
+
+void go(int cnt, ll visited, vector<int> seq) {
+    //cout << cnt << " " << visited << "\n";
+    if(cnt == m) {
+        if(used[seq]) {
+            return;
+        }
+        for(int i = 0; i < seq.size(); i++) {
+            cout << seq[i] << " ";
+        }
+        cout << "\n";
+        used[seq] = true;
+        return;
+    }
+
+    for(int i = 0; i<v.size(); i++) {
+        if(!((visited >> i) & 1)) {
+            vector<int> temp = seq;
+            temp.push_back({v[i]});
+            go(cnt+1, visited | (1 << i), temp);
+        }
+    }
+}
 
 int main(int argc, char* argv[]) {
     fio; 
+    cin >> n >> m;
 
-    int n;
-    cin >> n;
-
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    v.resize(n);
+    for(int i = 0; i < n; i++) {
+        cin >> v[i];
     }
+
+    sort(v.begin(), v.end());
+    
+    go(0, 0, {});
+    
 
     return 0;
 }

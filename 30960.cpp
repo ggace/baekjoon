@@ -66,19 +66,44 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+vector<int> v;
 
 int main(int argc, char* argv[]) {
     fio; 
 
     int n;
     cin >> n;
+    v.resize(n);
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    ll cost = 0;
+
+    for(int  i = 0; i < n; i++) {
+        cin >> v[i];
     }
+
+    sort(v.begin(), v.end());
+
+    int minimum_awkward_3 = INT_MAX;
+    int index;
+    for(int i = 0; i < n-1; i+=2) {
+        int temp = v[i+2] - v[i];
+        if(temp < minimum_awkward_3) {
+            minimum_awkward_3 = temp;
+            index = i;
+        }
+    }
+    cost += minimum_awkward_3;
+
+    for(int i = 0; i < n-1; i+=2) {
+        if(i >= index && i <= index+2) {
+            i++;
+            continue;
+        }
+        cost += v[i+1] - v[i];
+    }
+
+    cout << cost << "\n";
+
 
     return 0;
 }

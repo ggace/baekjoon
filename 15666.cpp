@@ -66,19 +66,46 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+vector<int> v;
+bool is_having[10101];
+int n, m;
+
+void go(int cnt, int max_index, vector<int> seq) {
+    if(cnt == m) {
+        for(int i = 0; i < seq.size();i++) {
+            cout << seq[i] << " ";
+        }
+        cout << "\n";
+        return ;
+    }
+
+    for(int i = max_index; i < v.size(); i++) {
+        vector<int> temp = seq;
+        temp.push_back(v[i]);
+        go(cnt+1, i, temp);
+    }
+}
 
 int main(int argc, char* argv[]) {
     fio; 
+    cin >> n >> m;
 
-    int n;
-    cin >> n;
+    
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    for(int i = 0; i < n; i++) {
+        int temp;
+        cin >> temp;
+        if(is_having[temp]) {
+            continue;
+        }
+        is_having[temp] = true;
+        v.push_back(temp);        
     }
+
+    sort(v.begin(), v.end());
+
+    go(0, 0, {});
+    
 
     return 0;
 }

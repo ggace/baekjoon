@@ -8,10 +8,9 @@ typedef unsigned long long ull;
 #define println(s) cout << s << "\n"
 #define mp() make_pair()
 #define PRIME_SIZE 5
-#define PIE M_PIf64
-#define arri(n) array<int, n>
-#define arrl(n) array<ll, n>
+#define END exit(0);
 #define input(type, value) type value; cin >> value;
+#define PIE M_PIf64
 
 #ifdef BOJ
 #define debug(x)  ((void)0);
@@ -66,19 +65,35 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+vector<int> x;
+vector<int> y;
+
+vector<int> g;
+
+array<double, 2> bias;
 
 int main(int argc, char* argv[]) {
-    fio; 
+    fio;
 
-    int n;
-    cin >> n;
+    input(int, n);
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    double theta = 2 * PIE / n;
+
+    loop(0, n, int, i) {
+        input(int, a);
+        x.push_back(a);
     }
+
+    loop(0, n, int, i) {
+        input(int, b);
+        y.push_back(b);
+    }
+
+    loop(0, n, int, i) {
+        g.push_back(x[i] + y[i]);
+    }
+
+
 
     return 0;
 }

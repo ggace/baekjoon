@@ -15,7 +15,7 @@ bool reverse_compare(int i1, int i2) {
 }
 
 vector<vector<int>> v(10001);
-vector<int> result;
+vector<int> djik_result;
 int max_count = -1;
 bool visited[10000+1];
 

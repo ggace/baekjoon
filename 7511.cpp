@@ -66,18 +66,61 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+int parent[1000000+1];
+
+int find(int a) {
+    if(parent[a] == a) {
+        return a;
+    }
+    return find(parent[a]);
+}
+
+void Union(int a, int b) {
+    a = find(a);
+    b = find(b);
+
+    parent[a] = b;
+    
+}
+
+void solution() {
+    
+    int n;cin >> n;
+    int k;cin >> k;
+    for(int i = 0; i < n; i++) {
+        parent[i] = i;
+    }
+    
+    loop(0, k, int, i) {
+        int a, b;
+        cin >> a >> b;
+
+        Union(a, b);
+    }
+
+    int m;
+    cin >> m;
+
+    loop(0, m, int, i) {
+        int u, v;
+        cin >> u >> v;
+        int x = find(u);
+        int y = find(v);
+
+        cout << (int)(x == y) << "\n";
+    }
+    cout << "\n";
+}
 
 int main(int argc, char* argv[]) {
     fio; 
 
-    int n;
-    cin >> n;
+    int t;
+    cin >> t;
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    loop(0, t, int, i) {
+        cout << "Scenario " << i+1 << ":\n";
+        solution();
     }
 
     return 0;

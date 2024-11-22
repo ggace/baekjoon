@@ -14,7 +14,7 @@ ll m, a, c, x0, n, g;
 ll rest;
 
 vector<vector<vector<ll>>> v;
-vector<vector<ll>> result;
+vector<vector<ll>> djik_result;
 
 vector<vector<ll>> multiply_matix(vector<vector<ll>> a, vector<vector<ll>> b) {
     
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
 
     cin >> m >> a >> c >> x0 >> n >> g;
     rest = m;
-    result = {{x0 % rest, 0}, {1, 0}};
+    djik_result = {{x0 % rest, 0}, {1, 0}};
     
     if(n == 0) {
         cout << x0 << "\n";
@@ -57,13 +57,13 @@ int main(int argc, char* argv[]) {
     for(int i = 0; i < 64; i++) {
         if((n >> i) & 0b1) {
             //cout << v[i][0][0] << "\n";
-            result = multiply_matix(v[i], result);
+            djik_result = multiply_matix(v[i], djik_result);
         }
     }
 
 
     //cout << result[0][0] << "\n";
-    cout << (result[0][0] % g) << "\n";
+    cout << (djik_result[0][0] % g) << "\n";
 
 
 

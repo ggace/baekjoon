@@ -66,19 +66,40 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+int dp[1010][1010];
 
 int main(int argc, char* argv[]) {
     fio; 
+    string a, b;
+    cin >> a >> b;
+    a = "-" + a;
+    b = "-" + b;
 
-    int n;
-    cin >> n;
-
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    for(int i = 0; i < a.size(); i++) {
+        for(int j = 0; j < b.size(); j++) {
+            if(i == 0 || j == 0) {
+                dp[i][j] = 0;
+            }
+            else if(a[i] == b[j]) {
+                dp[i][j] = dp[i-1][j-1] + 1;
+            }
+            else {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
     }
+
+    int result = -1;
+
+    for(int i = 0; i < a.size(); i++) {
+        
+        for(int j = 0; j < b.size(); j++) {
+            result = max(result, dp[i][j]);
+        }
+    }
+    cout << result << "\n";
+
+
 
     return 0;
 }

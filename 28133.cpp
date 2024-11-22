@@ -66,19 +66,81 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+struct Path {
+    int to;
+    ll warning;
+};
+
+struct Object {
+	int index;
+    ll warning;
+	int count;
+
+	Object(int i, int w,int c) {
+		index = i;
+        warning = w;
+        count = c;
+	}
+	bool operator<(const Object& Ob)const {
+
+		return warning > Ob.warning;
+	}
+};
+
+bool visited[202020];
+vector<vector<Path>> graph(202020);
+int n, m;
+vector<pair<int, int>> djik_result(202020);
+
+void djikstra(int start) {
+    priority_queue<Object> pq;
+
+    pq.push({start, 0, 0});
+
+    while(!pq.empty()) {
+        Object current = pq.top();
+        pq.pop();
+        if(visited[current.index]) {
+            continue;
+        }
+
+        //cout << " >> " << current.index << "\n";
+        visited[current.index] = true;
+        djik_result[current.index] = {current.warning, current.count};
+
+        for(auto next : graph[current.index]) {
+            ll next_warning = current.warning + next.warning;
+            pq.push(Object(next.to, next.warning, current.count+1));
+        }
+    }
+    
+}
 
 int main(int argc, char* argv[]) {
     fio; 
+    cin >> n >> m;
 
-    int n;
-    cin >> n;
+    for(int i = 0; i < m; i++) {
+        int a, b, d;
+        cin >> a >> b >> d;
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+        graph[a].push_back({b, d});
+        graph[b].push_back({a, d});
     }
+
+    djikstra(0);
+
+    int counting = 0;
+
+    for(int i = 1; i <= n; i++) {
+        //cout << i << ": {warning, count}: {" << result[i].first << " " << result[i].second << "}\n";
+        if(!visited[i]) {
+            cout << "-1\n";
+            exit(0);
+        }
+        counting += djik_result[i].second;
+    }
+    cout << counting << "\n";
 
     return 0;
 }

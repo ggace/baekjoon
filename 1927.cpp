@@ -66,18 +66,29 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+priority_queue<int, vector<int>, greater<int>> pq;
 
 int main(int argc, char* argv[]) {
     fio; 
 
-    int n;
-    cin >> n;
-
+    int n; cin >> n;
     while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+        
+        int a;
+        cin >> a;
+        if(a == 0) {
+            if(pq.empty()) {
+                cout << "0\n";
+            }
+            else {
+                cout << pq.top() << "\n";
+                pq.pop();
+            }
+        }
+        else {
+            pq.push(a);
+        }
+        
     }
 
     return 0;

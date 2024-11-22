@@ -66,18 +66,61 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+map<string, string> parent;
 
-int main(int argc, char* argv[]) {
-    fio; 
+map<string, int> result;
+
+string find(string x) {
+    if(parent.find(x) == parent.end()) {
+        return x;
+    }
+    return parent[x] = find(parent[x]);
+}
+
+void solution() {
+
+    parent.clear();
+    result.clear();
 
     int n;
     cin >> n;
 
     while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+        string a, b;
+        cin >> a >> b;
+
+        //cout << a << " " << b << ": ";
+
+        a = find(a);
+        b = find(b);
+
+        if(a == b) {
+            cout << result[b] << "\n";
+        }
+
+        parent[a] = b;
+        
+        if(result[a] == 0) {
+            result[a] = 1;
+        }
+        if(result[b] == 0) {
+            result[b] = 1;
+        }
+
+        result[b] += result[a];
+
+        cout << result[b] << "\n";
+    }
+}
+
+int main(int argc, char* argv[]) {
+    fio; 
+
+    int t;
+    cin >> t;
+
+    while(t--) {
+        solution();
     }
 
     return 0;

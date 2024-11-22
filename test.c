@@ -1,19 +1,18 @@
 #include <stdio.h>
 
-typedef struct _pair {
-    int first;
-    int second;
-} pair;
-
 int main() {
-    long long a = 0x0000000200000001;
-    printf("%lld\n", a);
-    printf("%d\n", (int)a);
-    printf("%d\n", (int)(a >> 32));
+    int a = 0;
+    int b = 1;
 
-    pair p = {2,1};
+    if(a + b - 1 > 0) {
+        printf("1\n");
+    }
+    else {
+        printf("0\n");
+    }
 
-    printf("%d\n", p.first);
-    printf("%d\n", p.second);
+    printf("%d\n", a & b);
+
+
     return 0;
 }

@@ -66,19 +66,48 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+int parent[202];
+
+int find(int x) {
+    if(parent[x] == x) {
+        return x;
+    }
+
+    return parent[x] = find(x);
+}
 
 int main(int argc, char* argv[]) {
     fio; 
+    int n, m;
+    cin >> n >> m;
 
-    int n;
-    cin >> n;
-
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    for(int i = 1; i <= n; i++) {
+        parent[i] = i;
     }
+
+    for(int i = 0; i < m; i++) {
+        int o, a, b;
+        cin >> o >> a >> b;
+
+        if(!o) {
+            break;
+        }
+
+        a = find(a);
+        b = find(b);
+
+        parent[a] = b;
+    }
+
+    int pre_root = find(1);
+    for(int i = 2; i <= n; i++) {
+        cout << find(i);
+        if(find(i) != pre_root) {
+            cout << "NO\n";
+            return 0;
+        }
+    }
+    cout << "YES\n";
 
     return 0;
 }

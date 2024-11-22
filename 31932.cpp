@@ -66,19 +66,70 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+struct Edge{
+    ll to;
+    ll distance;
+    ll disappearing_time;
+};
 
-int main(int argc, char* argv[]) {
-    fio; 
+struct Node {
+    int node;
+    ll going_time;
+    ll fish;
 
-    int n;
-    cin >> n;
+    Node(int n, ll g, ll f): node(n), going_time(g), fish(f) {}
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    bool operator<(const Node& node)const {
+        return fish > node.fish;
+	}
+};
+
+int n, m;
+vector<vector<Edge>> edges(101010);
+bool visited[101010];
+
+void dijkstra(int start) {
+    priority_queue<Node> pq;
+    pq.push(Node(start, 0, LONG_LONG_MIN+1));
+    while(!pq.empty()) {
+        auto [cur, time, temp_fish] = pq.top();
+        ll fish = -temp_fish;
+        pq.pop();
+
+        if(visited[cur]) {
+            continue;
+        }
+        visited[cur] = true;
+        //cout << cur << " " << time << " " << fish << "\n";
+
+        if(cur == n) {
+            cout << fish << "\n";
+            exit(0);
+        }
+
+        for(auto [next, next_distance, dis_time]: edges[cur]) {
+            if(dis_time - time - next_distance >= 0) {
+                pq.push(Node(next, time+next_distance, -min(fish, dis_time - time - next_distance)));
+            }
+            
+        }
+    }
+    cout << "-1\n";
+}
+
+int main() {
+
+    fio;
+
+    cin >> n >> m;
+    while(m--) {
+        int u, v, d, t;
+        cin >> u >> v >> d >> t;
+        edges[u].push_back({v, d, t});
+        edges[v].push_back({u, d, t});
     }
 
+    dijkstra(1);
+    
     return 0;
 }

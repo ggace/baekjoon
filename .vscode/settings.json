@@ -23,7 +23,13 @@
         "regex": "cpp",
         "valarray": "cpp",
         "type_traits": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "optional": "cpp",
+        "ratio": "cpp",
+        "system_error": "cpp",
+        "utility": "cpp",
+        "variant": "cpp",
+        "chrono": "cpp"
     },
     "BOJ.extension": "cpp",
     "BOJ.author": "skydream10"

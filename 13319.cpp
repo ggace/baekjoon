@@ -5,8 +5,7 @@ typedef unsigned long long ull;
 
 #define pii pair<int, int>
 #define pll pair<ll, ll>
-#define loop(a, b, i) for(i = a; i < b; i++) 
-#define foreach(l, ele) for(ele : l)
+#define loop(a, b, type, i) for(type i = a; i < b; i++) 
 #define println(s) cout << s << "\n"
 #define mp() make_pair()
 
@@ -28,59 +27,38 @@ ll fastpow(ll a, ll n, ll c){
     return result;
 }
 
-bool prime[500] = {1,1,0};
-vector<int> ps;
-
-void siv(int n) {
-
-    for(int i = 2; i <= n; i++)  {
-        if(!prime[i]) ps.push_back(i);
-        for(auto p : ps) {
-            if(i * p > n) break;
-            prime[i*p] = 1;
-            if(!(i % p)) continue;
+vector<ll> prime_list;
+vector<ll> under_500_prime_list;
+bool is_prime[31622777+1] = {1,1,0}; // 0이 소수
+void siv(ll n) {
+    for(int i = 2; i <= n; i++) {
+        if(!is_prime[i]) {
+            prime_list.push_back(i); 
+            if(i <= 500) 
+                under_500_prime_list.push_back(i);
+        }
+        for(auto p : prime_list) {
+            if(i*p > n) break;
+            is_prime[i*p] = true;
+            if(i%p == 0) break;
         }
     }
-}
-
-ll result = 1;
-
-bool is_prime(int n)  {
-    for(ll i = 2; i * i <= n; i++) {
-        if(!(n % i)) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-void is_flt(ll n) {
-    bool is_true = true;
-    for(auto a : ps) {
-        if(fastpow(a, n-1, n) != 1) {
-            return;
-        }
-    }
-    
-    if(!is_prime(n)) {
-        cout << n << "\n";
-        exit(0);
-    }
-    
 }
 
 int main(int argc, char* argv[]) {
-    //fio;
+    fio;
 
-    siv(500);
-
-    for(ll i = 2; log10(i) < 15; i++) {
-        is_flt(i);
-        cout << i << "\n";
+    siv(555);
+    ll n = 281861;
+    for(auto a: under_500_prime_list) {
+        if(!(fastpow(a, n-1, n) == 1)) {
+            cout << "no at " << a << "\n";
+            exit(0);
+        }
     }
 
-    cout << result << "\n";
+    cout << "yes\n";
+
 
     return 0;
 }

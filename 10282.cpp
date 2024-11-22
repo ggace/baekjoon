@@ -66,18 +66,83 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+struct Edge {
+    int to;
+    int time;
+    Edge(int t, int tm) {
+        to = t;
+        time = tm;
+    }
+};
+
+struct Node {
+    int node;
+    int time;
+    Node(int n, int t) : node(n), time(t) {}
+
+    bool operator<(const Node& node)const {
+
+		return time > node.time;
+	}
+};
+
+bool visited[10101];
+vector<vector<Edge>> edges(10101);
+
+void djikstra(int start) {
+    memset(visited, 0, sizeof(visited));
+    int cnt = 0, times = 0;
+    priority_queue<Node> pq;
+
+    pq.push(Node(start, 0));
+
+    while(!pq.empty()) {
+        auto [cur, time] = pq.top();
+        pq.pop();
+
+        if(visited[cur]) {
+            continue;
+        }
+        visited[cur] = true;
+
+        ++cnt;
+        times = time;
+
+        for(auto [next, next_time] : edges[cur]) {
+            pq.push(Node(next, time + next_time));
+        }
+    }
+
+    cout << cnt << " " << times << "\n";
+
+}
+
+void solution() {
+    for(int i = 0; i < 10101; i++) {
+        edges[i].clear();
+    }
+
+    int n, d, c;
+    cin >> n >> d >> c;    
+    
+    for(int i = 0; i < d; i++) {
+        int a, b, s;
+        cin >> a >> b >> s;
+
+        edges[b].push_back(Edge(a, s));
+    }
+
+    djikstra(c);
+}
 
 int main(int argc, char* argv[]) {
     fio; 
 
-    int n;
-    cin >> n;
+    int t;
+    cin >> t;
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    while(t--) {
+        solution();
     }
 
     return 0;

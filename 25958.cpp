@@ -66,19 +66,47 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+vector<int> pretty;
+
+void getpretty() {
+    for(int i = 1; i <= 5000; i++) {
+        int cur = i;
+        ll sum = 0;
+        while(cur) { 
+            sum += cur % 10;
+            cur /= 10;
+        }
+        //cout << cur << "\n";
+        if(i % sum == 0) {
+            pretty.push_back(i);
+        }
+    }
+}
+
+int dp[5050][1010];
+int m, k;
+
+int recur(int su, int index) {
+    if(su < 0) return 0;
+    if(su == 0) return 1;
+    if(index== pretty.size()) return 0;
+    int &ret = dp[su][index];
+    if(ret != -1) return ret;
+    ret = recur(su - pretty[index], index) + recur(su, index+1);
+
+    return ret % k;
+
+}
 
 int main(int argc, char* argv[]) {
     fio; 
+    cin >> m >> k;
 
-    int n;
-    cin >> n;
+    memset(dp, -1, sizeof(dp));
+    getpretty();
+    
+    cout <<  recur(m, 0) << "\n";
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
-    }
 
     return 0;
 }

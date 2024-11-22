@@ -66,19 +66,59 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+vector<int> v(1010);
+vector<int> dp(1010);
+vector<vector<int>> route(1010);
 
 int main(int argc, char* argv[]) {
     fio; 
 
     int n;
     cin >> n;
-
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    for(int i = 0; i < n; i++) {
+        cin >> v[i];
+        dp[i] = 1;
+        route[i] = {i};
     }
+
+    for(int i = 0; i < n; i++) {
+        int maximum = 1;
+        int index = -1;
+        for(int j = 0; j < i; j++) {
+            if(v[i] > v[j] && maximum < dp[j] + 1) {
+                maximum = dp[j] + 1;
+                index = j;
+            }
+            
+        }
+        dp[i] = maximum;
+        if(index != -1) {
+            route[i] = route[index];
+            route[i].push_back(i);
+        }
+/*
+        cout << i << ": ";
+        cout << index << " >> \n";
+        for(int j = 0; j < route[i].size(); j++) {
+            cout << route[i][j] << " ";
+        }
+        cout << "\n\n";
+*/
+    }
+
+    int result = -1;
+    int final_index = -1;
+    for(int i = 0; i < n; i++) {
+        if(result < dp[i]) {
+            final_index = i;
+            result = dp[i];
+        }
+    }
+    cout << result << "\n";
+    for(int i = 0; i < route[final_index].size(); i++) {
+        cout << v[route[final_index][i]] << " ";
+    }
+    cout << "\n";
 
     return 0;
 }

@@ -11,7 +11,7 @@ bool reverse_compare(int i1, int i2) {
 }
 
 vector<vector<int>> v;
-vector<pair<int, int>> result;
+vector<pair<int, int>> djik_result;
 
 bool compare(pair<int, int> a, pair<int, int> b) {
     if(a.first == b.first) {
@@ -28,7 +28,7 @@ int main(){
     cin >> n >> m;
 
     for(int i = 0; i < n; i++) {
-        result.push_back({0, i});
+        djik_result.push_back({0, i});
         vector<int> tmp_v;
         for(int j = 0; j < m; j++) {
             int x;
@@ -52,10 +52,10 @@ int main(){
         sort(tmp_v.begin(), tmp_v.end(), compare);
 
         int current_value = tmp_v[0].first;
-        result[tmp_v[0].second].first++;
+        djik_result[tmp_v[0].second].first++;
         for(int j = 1; j < n; j++) {
             if(current_value == tmp_v[j].first) {
-                result[tmp_v[j].second].first++;
+                djik_result[tmp_v[j].second].first++;
             }
             else{
                 break;
@@ -65,14 +65,14 @@ int main(){
 
     cout << "=========================================\n";
 
-    sort(result.begin(), result.end(), compare);
+    sort(djik_result.begin(), djik_result.end(), compare);
 
-    int current_value = result[0].first;
+    int current_value = djik_result[0].first;
     for(int j = 0; j < n; j++) {
 
         //cout << result[j].first << " " << result[j].second << "\n";
-        if(current_value == result[j].first) {
-            cout << result[j].second+1 << " ";
+        if(current_value == djik_result[j].first) {
+            cout << djik_result[j].second+1 << " ";
         }
         else{
             break;

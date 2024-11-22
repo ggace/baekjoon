@@ -66,19 +66,39 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+vector<int> arr;
+vector<int> dp(1010);
 
 int main(int argc, char* argv[]) {
     fio; 
 
-    int n;
-    cin >> n;
+    input(int, n);
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    for(int i = 0; i < n; i++) {
+        int a;
+        cin >> a;
+        arr.push_back(a);
     }
+    
+    for(int i = 0; i < n; i++) {
+        int maximum = 0;
+        for(int j = 0; j < i; j++) {
+            if(arr[i] > arr[j]) {
+                maximum = max(dp[j], maximum);
+            }
+        }
+
+        dp[i] = maximum +1;
+    }
+
+    int max_cnt = -1;
+    for(int i = 0; i < n; i++) {
+        //cout << dp[i] << "\n";
+        max_cnt = max(max_cnt, dp[i]);
+    }
+    cout << max_cnt << "\n";
+
+    
 
     return 0;
 }

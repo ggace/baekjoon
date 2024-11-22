@@ -76,7 +76,7 @@ struct Compare {
 };
 
 priority_queue<arri(3), vector<arri(3)>, Compare> close_open_index;
-vector<int> result;
+vector<int> djik_result;
 
 int main(int argc, char* argv[]) {
     fio;
@@ -111,13 +111,13 @@ int main(int argc, char* argv[]) {
             goto IMPOSSIBLE;   
         }
         final_open += current_arr[1];
-        result.push_back(current_arr[2]);
+        djik_result.push_back(current_arr[2]);
     }
     if(final_open != 0){
         goto IMPOSSIBLE;
     }
 
-    for(auto r : result) {
+    for(auto r : djik_result) {
         cout << r << "\n";
     }
 

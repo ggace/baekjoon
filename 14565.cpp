@@ -32,7 +32,7 @@ vector<pll> sn;
 vector<ll> an;
 ll n, a;
 
-vector<pair<__int128_t, __int128_t>> result;
+vector<pair<__int128_t, __int128_t>> djik_result;
 
 ll my_gcd(ll a, ll b) {
     if(b == 0) {
@@ -74,13 +74,13 @@ int main(int argc, char* argv[]) {
 
     ll j = 0;
     
-    result.push_back({1, -an[an.size()-1]});
+    djik_result.push_back({1, -an[an.size()-1]});
     for(ll i = an.size()-2; i >= 0 ; i--) {
-        pair<__int128_t, __int128_t> before = result[j++];
-        result.push_back({before.second % n, ((before.first % n) - ((before.second % n) * ((__int128_t)an[i] % n)) % n ) %n});
+        pair<__int128_t, __int128_t> before = djik_result[j++];
+        djik_result.push_back({before.second % n, ((before.first % n) - ((before.second % n) * ((__int128_t)an[i] % n)) % n ) %n});
     }
 
-    ll final_result = result.back().second % n;
+    ll final_result = djik_result.back().second % n;
 
     if(final_result < 0) {
         final_result += n;

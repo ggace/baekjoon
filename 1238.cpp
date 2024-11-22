@@ -66,19 +66,89 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+struct Edge {
+    int to;
+    int time;
+    Edge(int t, int ti) {
+        to = t;
+        time = ti;
+    }
+};
+
+vector<vector<Edge>> edges(10101);
+struct Node {
+    int current;
+    int time;
+
+    Node(int c, int t): current(c), time(t) {}
+
+    bool operator<(const Node& node)const {
+        return time > node.time;
+    }    
+};
+
+bool visited[1010];
+vector<int> djik_result(1010);
+
+int djikstra(int start, int end) {
+    memset(visited, 0, sizeof(visited));
+    fill_n(djik_result.begin(), djik_result.size(), 0);
+    priority_queue<Node> pq;
+    pq.push(Node(start, 0));
+
+    while(!pq.empty()) {
+        auto [cur, time] = pq.top();
+        pq.pop();
+
+        if(visited[cur]) {
+            continue;
+        }
+        visited[cur] = true;
+        djik_result[cur] = time;
+
+        if(cur == end) {
+            return time;
+        }
+
+        for(auto [next_node, next_time] : edges[cur]) {
+            pq.push(Node(next_node, time+next_time));
+        }
+
+    }
+
+    return 0;
+}
+
+int n, m, x;
+
+vector<int> result(1010);
 
 int main(int argc, char* argv[]) {
     fio; 
 
-    int n;
-    cin >> n;
+    cin >> n >> m >> x;
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    for(int i = 0; i < m; i++) {
+        int a, b, c;
+        cin >> a >> b >> c;
+
+        edges[a].push_back(Edge(b, c));
     }
+
+    int final_result = -1;
+
+    for(int i = 1; i <= n; i++) {
+        result[i] = djikstra(i, x);
+    }
+    djikstra(x, 101010);
+    for(int i = 1; i <= n; i++) {
+        result[i] += djik_result[i];
+        final_result = max(final_result, result[i]);
+    }
+
+    cout << final_result << "\n";
+
+    
 
     return 0;
 }

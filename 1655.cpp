@@ -66,7 +66,8 @@ void siv(ll n) {
     }
 }
 
-vector<pii> room;
+priority_queue<int> low;
+priority_queue<int, vector<int>, greater<int>> high;
 
 int main(int argc, char* argv[]) {
     fio; 
@@ -74,11 +75,34 @@ int main(int argc, char* argv[]) {
     int n;
     cin >> n;
 
-    while(n--) {
-        int start, end;
-        cin >> start >> end;
-        room.push_back({start, end});
+    for(int i = 1; i <= n; i++) {
+        int a;
+        cin >> a;
+        if(high.empty()) {
+            low.push(a);
+        }
+        else if(high.top() < a) {
+            high.push(a);
+        }
+        else {
+            low.push(a);
+        }
+
+        while(low.size() > ceil(i/2.)){
+            high.push(low.top());
+            low.pop();
+        }
+        while(high.size() > i/2) {
+            low.push(high.top());
+            high.pop();
+        }
+        //cout << i << " - low  size: " << low.size() << "\n";
+        //cout << i << " - high size: " << high.size() << "\n";
+
+        cout << low.top() << "\n";
     }
+
+        
 
     return 0;
 }
