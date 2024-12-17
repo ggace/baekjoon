@@ -1,73 +1,122 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <map>
-#include <string>
-#include <queue>
-#include <cmath>
-#include <deque>
-#include <stack>
-#include <set>
-#include <limits>
-#include <sstream>
-#include <stdio.h>
-#define inn int n; cin>>n;
-#define rp(x, y) for(int x = 0; x<y; x++)
+typedef long double ld;
+typedef long long ll;
+typedef unsigned long long ull;
+
 #define pii pair<int, int>
-#define pll pair<long long, long long>
-#define mp(x, y) make_pair(x, y)
-#define ll long long
+#define pll pair<ll, ll>
+#define loop(a, b, type, i) for(type i = a; i < b; i++) 
+#define println(s) cout << s << "\n"
+#define mp() make_pair()
+#define PRIME_SIZE 5
+#define PIE M_PIf64
+#define arri(n) array<int, n>
+#define arrl(n) array<ll, n>
+#define input(type, value) type value; cin >> value;
+
+#ifdef BOJ
+#define debug(x)  ((void)0);
+#define debug_value(x)  ((void)0);
+#define fio cin.tie(0);cout.tie(0);ios_base::sync_with_stdio(false);
+#else
+#define debug(x)  cout << "[Debug] " << x;
+#define debug_value(x)  cout << "[Debug] " << #x << " is " << x << '\n';
+#define fio ((void)0);
+#endif
+
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int result = __INT_MAX__;
-set<int> visited;
+class Direction {
+    public:
+        int dx;
+        int dy;
+};
 
-void bfs(int current, int end){
-    int depth = 0;
-    priority_queue<pii, vector<pii>, greater<pii>> q;
-    q.push(mp(depth, current));
-    visited.insert(depth);
+class Position {
+    public:
+        int x;
+        int y;
+};
 
-    while(!q.empty()){
-        int cur = q.top().second;
-        int dep = q.top().first;
-        q.pop();
-
-        if(cur == end){
-            result = min(result, dep);
-            return;
+ll fastpow(ll a, ll n, ll c){
+    ll result=1;
+    while(n){
+        if(n&1){
+            result *=a;
+            if(result>=c) result%=c;
         }
-        
-        if(cur-1 >= 0 && visited.end() == visited.find(cur-1)){
-            q.push(mp(dep+1, cur-1));
-            visited.insert(cur-1);
-        }
-        if(cur+1 <= 100000 && visited.end() == visited.find(cur+1)){
-            q.push(mp(dep+1, cur+1));
-            visited.insert(cur+1);
-        }
-        if(2*cur <= 100000 && visited.end() == visited.find(2*cur)){
-            q.push(mp(dep, 2*cur));
-            visited.insert(2*cur);
-        }
-    }   
+        a*=a;
+        if(a>=c) a%=c;
+        n>>=1;
+    }
+    return result;
 }
 
-int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    
-    int N, K;
-    cin>>N>>K;
+vector<ll> prime_list;
+bool is_prime[PRIME_SIZE+1] = {1,1,0}; // 0이 소수
+void siv(ll n) {
+    for(int i = 2; i <= n; i++) {
+        if(!is_prime[i]) prime_list.push_back(i);
+        for(auto p : prime_list) {
+            if(i*p > n) break;
+            is_prime[i*p] = true;
+            if(i%p == 0) break;
+        }
+    }
+}
 
-    if(N > K){
-        cout<<N-K;
-        return 0;
+vector<vector<int>> graph(10101);
+bool visited[10101];
+
+void dfs(int cur) {
+    
+    stack<int> s;
+    s.push(cur);
+    while(!s.empty()) {
+        int cur = s.top();
+        s.pop();
+        if(visited[cur]) {
+            continue;
+        }
+        visited[cur] = true;
+        
+        cout << cur << " ";
+
+        for(auto next : graph[cur]) {
+            
+            
+            s.push(next);
+            
+        }
+    }
+}
+
+bool reverse_sort(const int& a, const int& b) {
+    return a > b;
+}
+
+int main(int argc, char* argv[]) {
+    fio; 
+
+    int n, m, v;
+    
+    cin >> n >> m >> v;
+
+    while(m--) {
+        int a, b;
+
+        cin >> a >> b;
+
+        graph[a].push_back(b);
+        graph[b].push_back(a);  
     }
 
-    bfs(N, K);
-    cout<<result;
-    
+    for(int i = 0; i < graph.size();i++) {
+        sort(graph[i].begin(), graph[i].end(), reverse_sort);
+    }
+    dfs(1);
+
+
     return 0;
 }

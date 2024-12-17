@@ -69,7 +69,7 @@ void siv(ll n) {
 struct Edge{
     ll to;
     ll distance;
-    ll disappearing_time;
+    ll time;
 };
 
 struct Node {
@@ -80,27 +80,31 @@ struct Node {
     Node(int n, ll g, ll f): node(n), going_time(g), fish(f) {}
 
     bool operator<(const Node& node)const {
-        return fish > node.fish;
+        return fish < node.fish;
 	}
 };
 
 int n, m;
 vector<vector<Edge>> edges(101010);
-bool visited[101010];
+// bool visited[101010];
+vector<ll> visited(101010, 0);
 
-void dijkstra(int start) {
-    priority_queue<Node> pq;
-    pq.push(Node(start, 0, LONG_LONG_MIN+1));
+void dijkstra(ll start) {
+    priority_queue<Node> pq; // node, time, fish
+
+    pq.push(Node(start, 0, LONG_LONG_MAX));
+    visited[start] = LONG_LONG_MAX;
+
     while(!pq.empty()) {
-        auto [cur, time, temp_fish] = pq.top();
-        ll fish = -temp_fish;
+        auto [cur, time, fish] = pq.top();
         pq.pop();
+        // debug_value(cur);
+        // debug_value(fish);
+        // debug("\n");
 
-        if(visited[cur]) {
+        if(visited[cur] > fish) {
             continue;
         }
-        visited[cur] = true;
-        //cout << cur << " " << time << " " << fish << "\n";
 
         if(cur == n) {
             cout << fish << "\n";
@@ -108,8 +112,9 @@ void dijkstra(int start) {
         }
 
         for(auto [next, next_distance, dis_time]: edges[cur]) {
-            if(dis_time - time - next_distance >= 0) {
-                pq.push(Node(next, time+next_distance, -min(fish, dis_time - time - next_distance)));
+            if(dis_time - time - next_distance >= 0 && visited[next] < min(fish, dis_time - time - next_distance)) {
+                pq.push(Node(next, time+next_distance, min(fish, dis_time - time - next_distance) ));
+                visited[next] = min(fish, dis_time - time - next_distance);
             }
             
         }

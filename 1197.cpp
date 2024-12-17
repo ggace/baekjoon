@@ -66,62 +66,55 @@ void siv(ll n) {
     }
 }
 
-map<string, string> parent;
-map<string, int> result;
+int v,e;
+int represent[ 10101];
+priority_queue<array<int, 3>> pq; //w, a, b;
 
-string find(string x) {
-    if(parent.find(x) == parent.end()) {
-        return x;
+int find(int a) {
+    if(represent[a] == a) {  
+        return a;
     }
-    return parent[x] = find(parent[x]);
+
+    return represent[a] = find(represent[a]);
 }
 
-void solution() {
+int main(int argc, char* argv[]) {
+    fio;  
 
-    parent.clear();
-    result.clear();
+    
 
-    int n;
-    cin >> n;
+    cin >> v >> e;
 
-    while(n--) {
-        string a, b;
-        cin >> a >> b;
+    for(int i = 1; i <= v; i++) {
+        represent[i] = i;
+    }
 
-        //cout << a << " " << b << ": ";
+    for(int i = 0; i < e; i++) {
+        int a, b, w;
+        cin >> a>> b >> w;
+        pq.push({-w, a, b});
+    }
+    int result = 0;
+
+    while(!pq.empty()) {
+        auto [w, a, b] = pq.top();
+        pq.pop();
 
         a = find(a);
         b = find(b);
 
         if(a == b) {
-            cout << result[b] << "\n";
             continue;
         }
 
-        parent[a] = b;
-        
-        if(result[a] == 0) {
-            result[a] = 1;
-        }
-        if(result[b] == 0) {
-            result[b] = 1;
-        }
+        result += -w;
 
-        result[b] += result[a];
-
-        cout << result[b] << "\n";
+        represent[a] = b;
     }
-}
 
-int main(int argc, char* argv[]) {
-    fio; 
+    cout << result << "\n";
 
-    int t;
-    cin >> t;
 
-    while(t--) {
-        solution();
-    }
 
     return 0;
 }

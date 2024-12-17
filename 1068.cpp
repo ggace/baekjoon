@@ -66,61 +66,21 @@ void siv(ll n) {
     }
 }
 
-map<string, string> parent;
-map<string, int> result;
-
-string find(string x) {
-    if(parent.find(x) == parent.end()) {
-        return x;
-    }
-    return parent[x] = find(parent[x]);
-}
-
-void solution() {
-
-    parent.clear();
-    result.clear();
-
-    int n;
-    cin >> n;
-
-    while(n--) {
-        string a, b;
-        cin >> a >> b;
-
-        //cout << a << " " << b << ": ";
-
-        a = find(a);
-        b = find(b);
-
-        if(a == b) {
-            cout << result[b] << "\n";
-            continue;
-        }
-
-        parent[a] = b;
-        
-        if(result[a] == 0) {
-            result[a] = 1;
-        }
-        if(result[b] == 0) {
-            result[b] = 1;
-        }
-
-        result[b] += result[a];
-
-        cout << result[b] << "\n";
-    }
-}
+bool visited[555];
 
 int main(int argc, char* argv[]) {
     fio; 
 
-    int t;
-    cin >> t;
+    int n;
+    cin >> n;
 
-    while(t--) {
-        solution();
+    for(int i = 1; i <= n; i++) {
+        int a;
+        cin >> a;
+        if(a == -1) {
+            continue;
+        }
+        
     }
 
     return 0;

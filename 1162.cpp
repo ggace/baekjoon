@@ -29,16 +29,17 @@ using namespace std;
 
 struct Edge {
     int to;
-    ll disappearing_time;
+    ll time;
 };
 
 int n, m, k;
 vector<vector<Edge>> edges;
-ll result[10101];
+ull result[10101][22];
+bool visited[10101][22];
 
 struct Node {
     int index;
-    ll time;
+    ull time;
     int cover_remain;
 
     Node(int i, ll t, int c) : index(i), time(t), cover_remain(c){}
@@ -49,11 +50,7 @@ struct Node {
 	}
 };
 
-
-
 void dijkstra(int start, int goal) {
-
-    ll out_time = LONG_LONG_MAX;
 
     priority_queue<Node> pq;
     pq.push(Node(start, 0, k));
@@ -62,30 +59,36 @@ void dijkstra(int start, int goal) {
         auto [cur, time, cover_remain] = pq.top();
         pq.pop();
 
-        result[cur] = min(time, result[cur]);        
-
+        if(visited[cur][cover_remain]) {
+            continue;
+        }
+        visited[cur][cover_remain] = true;
+        
         if(cur == goal) {
-            //cout << time << "\n";
-            out_time = min(time, out_time);
             continue;
         }
 
         for(auto [next_node, next_time]: edges[cur]) {
-            if(time + next_time < result[next_node]) {
+            if(time + next_time < result[next_node][cover_remain]) {
                 pq.push(Node(next_node, time + next_time, cover_remain));
-                
+                result[next_node][cover_remain] = min(result[next_node][cover_remain], time+next_time);
             }
 
-            if((time < result[next_node]) && cover_remain) {
+            if(time < result[next_node][cover_remain-1] && cover_remain) {
                 pq.push(Node(next_node, time, cover_remain-1));
+                result[next_node][cover_remain-1] = min(result[next_node][cover_remain-1], time);
             }
-            
-
-            
         }
     }
 
-    cout << out_time << "\n";
+    ull r = -1;
+    for(int i = 0; i <= k; i++) {
+        r = min(r, result[goal][i]);
+    }
+
+    cout << r << "\n";
+
+    
 }
 
 int main(int argc, char* argv[]) {
@@ -94,7 +97,7 @@ int main(int argc, char* argv[]) {
 
     cin >> n >> m >> k;
     edges.resize(m+1);
-    fill(result, result + n + 1, LLONG_MAX);
+    memset(result, -1, sizeof(result));
 
     for(int i = 0; i < m; i++) {
         int a, b;
@@ -103,7 +106,6 @@ int main(int argc, char* argv[]) {
         edges[a].push_back({b, t});
         edges[b].push_back({a, t});
     }
-
     dijkstra(1, n);
 
     return 0;

@@ -66,62 +66,59 @@ void siv(ll n) {
     }
 }
 
-map<string, string> parent;
-map<string, int> result;
+struct Edge {
+    int to;
+    int weight;
+};
 
-string find(string x) {
-    if(parent.find(x) == parent.end()) {
-        return x;
-    }
-    return parent[x] = find(parent[x]);
-}
+vector<vector<Edge>> edges;
+vector<bool> visited;
 
-void solution() {
+void dijkstra(int start, int finish) {
+    priority_queue<pll> pq;
 
-    parent.clear();
-    result.clear();
+    pq.push({0, start});
 
-    int n;
-    cin >> n;
-
-    while(n--) {
-        string a, b;
-        cin >> a >> b;
-
-        //cout << a << " " << b << ": ";
-
-        a = find(a);
-        b = find(b);
-
-        if(a == b) {
-            cout << result[b] << "\n";
+    while(!pq.empty()) {
+        auto [w, node] = pq.top();
+        w = -w;
+        pq.pop();
+        if(node == finish) {
+            cout << w << "\n";
+            break;
+        }
+        if(visited[node]) {
             continue;
         }
+        visited[node] = true;
 
-        parent[a] = b;
-        
-        if(result[a] == 0) {
-            result[a] = 1;
+        for(auto [next_node, next_weight] : edges[node]) {
+            pq.push({-w-next_weight, next_node});
         }
-        if(result[b] == 0) {
-            result[b] = 1;
-        }
-
-        result[b] += result[a];
-
-        cout << result[b] << "\n";
     }
 }
 
 int main(int argc, char* argv[]) {
     fio; 
 
-    int t;
-    cin >> t;
+    int n, m;
+    cin >> n >> m;
 
-    while(t--) {
-        solution();
+    edges.resize(n+1);
+    visited.resize(n+1);
+
+    for(int i = 0; i < m; i++) {
+        int begin, end, weight;
+        cin >> begin >> end >> weight;
+
+        edges[begin].push_back({end, weight});
     }
+
+    int start, finish;
+    cin >> start >> finish;
+
+
+    dijkstra(start, finish);
 
     return 0;
 }

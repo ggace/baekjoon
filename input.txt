@@ -1,9 +1,7 @@
-2
-3
-Fred Barney
-Barney Betty
-Betty Wilma
-3
-Fred Barney
-Betty Wilma
-Barney Betty
+n^(a+bi)
+
+n^a * e^ibln(n)
+n^a * (cos(b ln(n)) + i sin(b ln(n))
+
+cosx = sigma (-1) ^ n / (2n)! * x^2n
+sinx = sigma (-1) ^ n / (2n+1)! * x^(2n+1)

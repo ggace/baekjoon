@@ -66,51 +66,50 @@ void siv(ll n) {
     }
 }
 
-map<string, string> parent;
-map<string, int> result;
-
-string find(string x) {
-    if(parent.find(x) == parent.end()) {
-        return x;
-    }
-    return parent[x] = find(parent[x]);
-}
-
 void solution() {
+    int q;
+    cin >>q;
+    multiset<int> ms;
 
-    parent.clear();
-    result.clear();
+    while(q--) {
+        char command;
+        int value;
+        cin >> command >> value;
+        debug(command << " " << value << "\n");
+        switch(command) {
+            case 'I':
+                ms.insert(value);
+                break;
+            case 'D':
+                if(ms.empty()) {
+                    break;
+                }
+                multiset<int>::iterator iter;
+                if(value == -1) {
+                    iter = ms.begin();
+                }
+                else {
+                    iter = ms.end();
+                    --iter;
+                }
 
-    int n;
-    cin >> n;
-
-    while(n--) {
-        string a, b;
-        cin >> a >> b;
-
-        //cout << a << " " << b << ": ";
-
-        a = find(a);
-        b = find(b);
-
-        if(a == b) {
-            cout << result[b] << "\n";
-            continue;
+                debug(*iter << "\n");
+                ms.erase(iter);
+                break;
         }
-
-        parent[a] = b;
-        
-        if(result[a] == 0) {
-            result[a] = 1;
-        }
-        if(result[b] == 0) {
-            result[b] = 1;
-        }
-
-        result[b] += result[a];
-
-        cout << result[b] << "\n";
+        //cout << q << "\n";
     }
+
+    if(ms.empty()) {
+        cout << "EMPTY\n";
+        return;
+    }
+    auto max_value = ms.end();
+    --max_value;
+    auto min_value = ms.begin();
+
+    cout << *max_value << " " << *min_value << "\n";
+    
 }
 
 int main(int argc, char* argv[]) {
